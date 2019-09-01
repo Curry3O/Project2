@@ -1,0 +1,213 @@
+<div>
+	<div class="user-manage">
+		<div class="btn-div">
+			<button data-toggle='modal' data-target='#myModal' class="btn btn-success" id="to-add">新增</button>
+		</div>
+		<div class="row
+		 userall">
+		</div>
+	</div>
+	
+	<!-- 模态框 -->
+	<div class="modal fade" tabindex="-1" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button"><i class="fa fa-times"></i></button>
+					<h4 class="modal-title">添加新用户</h4>
+				</div>
+				<div class="modal-body">
+					<form action="#" class="form-horizontal">
+						<div class="form-group">
+							<label for="username" class="col-md-3 control-label">用户名：</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="请输入用户名" id="username" />	
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="col-md-3 control-label">密码：</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" placeholder="请输入密码" id="password" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="confirm-password" class="col-md-3 control-label">确认密码：</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" placeholder="请再次输入密码" id="confirm-password" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="nickname" class="col-md-3 control-label">真实姓名：</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="请输入真实姓名" id="nickname">	
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="nickname" class="col-md-3 control-label">邮箱：</label>
+							<div class="col-md-9">
+								<input type="email" class="form-control" placeholder="请输入邮箱" id="email">	
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<span class="alte hidden">请输入完整信息</span>
+					<button class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button class="btn btn-info" id="to-save">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		findAllUser();
+
+		//清空表单
+		$('#to-add').click(function(){
+			$(".modal [type=text],.modal [type=password],.modal [type=email]").val(null);
+  			$('.modal .alte').addClass('hidden');
+		});
+
+		//switch开关
+		$('.userall').on({'switchChange.bootstrapSwitch':function(event,state){
+			var id = $(this).attr('data-id');
+  			changeStatus({id:id,status:state});
+		}},'[name="my-checkbox"]');
+
+		//保存
+		$('#to-save').click(function(){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth()+1
+			month = month<10?'0'+month:month;
+			var day = date.getDate();
+			day = day<10?'0'+day:day;
+			var hours = date.getHours();
+			hours = hours<10?'0'+hours:hours;
+			var minutes = date.getMinutes();
+			minutes = minutes<10?'0'+minutes:minutes;
+			var seconds = date.getSeconds();
+			seconds = seconds<10?'0'+seconds:seconds;
+			var regTime = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds;
+			var username = $('input#username').val();
+			var password = $('input#password').val();
+			var confirmpwd = $('input#confirm-password').val();
+			var nickname = $('input#nickname').val();
+  			var email = $('input#email').val();
+  			var userface = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg';
+  			console.log(username,password,confirmpwd,nickname,email);
+  			if (!username||!password||!confirmpwd||!nickname||!email) {
+  				$('.modal .alte').removeClass('hidden');
+  			}else{
+  				var obj = {
+  					username:username,
+  					password:password,
+  					nickname:nickname,
+  					email:email,
+  					regTime:regTime,
+  					userface:userface,
+	  			};
+	  			saveOrUpdateUser(obj);
+	  			$("#myModal").modal("hide");
+  			}
+		});
+
+		//删除
+		$('.userall').click(function(){
+			var target = event.target;
+			if ($(target).attr('title')=='删除') {
+				var id = $(target).attr('data-id');
+				deleteUserById({id:id});
+			}
+		});
+
+
+		//Ajax
+		//在页面上追加数据
+		function findAllUser(){
+			getAjax('/manager/user/findAllUser','GET',null,function(res){
+				var str = '';
+				res.data.forEach(function(item){
+					if (!item.regTime) {
+						item.regTime = '-';
+					}
+					if (!item.userface) {
+						item.userface = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565332405497&di=6e4e11b7867c6f453a6fbea4b65f9e02&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201502%2F14%2F20150214214139_Veyah.jpeg';
+					}
+					str +=`
+						<div class="col-sm-4">
+							<div class="userinfo">
+								<img class="img-circle" src=https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg>
+								<button type="button" class="close">
+									<i title="删除" class="fa fa-times" data-id='`+item.id+`'></i>
+								</button>
+								<div class="caption">
+									<div class="row">
+										<div class="col-md-4 col-md-offset-2">用户名</div>
+										<div class="col-md-6 col-md-pull-1">`+item.username+`</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4 col-md-offset-2">真实姓名</div>
+										<div class="col-md-6 col-md-pull-1">`+item.nickname+`</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4 col-md-offset-2">注册时间</div>
+										<div class="col-md-6 col-md-pull-1">`+item.regTime+`</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4 col-md-offset-2">email</div>
+										<div class="col-md-6 col-md-pull-1">`+item.email+`</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4 col-md-offset-2">状态</div>
+										<div class="col-md-6 col-md-pull-1">
+											<div class="btn-group" title='状态'>	
+												<input type="checkbox" name="my-checkbox" checked flag='`+item.enabled+`' data-id='`+item.id+`' />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					`;
+					$(".userall").html(str);
+				});
+				//登录状态切换按钮
+				$('input[name="my-checkbox"]').bootstrapSwitch({
+			        "onColor" : "success",
+			        "offColor" : "danger",
+			        "onText" : "ON",
+			        "offText" : "OFF",
+			    });
+			},function(error){
+				console.log(error);
+			});
+		}
+
+		//添加
+		function saveOrUpdateUser(obj){
+	    	getAjax('/manager/user/saveOrUpdateUser','POST',obj,function(res){
+	    		findAllUser();
+	    	},function(error){
+	    		console.log(error);
+	    	});
+	    }
+
+	    //删除
+	    function deleteUserById(obj){
+	    	getAjax('/manager/user/deleteUserById','GET',obj,function(res){
+	    		findAllUser();
+	    	},function(error){
+	    		console.log(error);
+	    	});
+	    }
+
+	    //改变状态
+		function changeStatus(obj){
+	    	getAjax('/manager/user/changeStatus','POST',obj,function(res){
+	    	},function(err){
+	    		console.log(err);
+	    	});
+	    }
+	</script>
+</div>

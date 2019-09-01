@@ -1,0 +1,199 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+article,nav,header,img{
+	display: block;
+}
+html,body{
+	height: 100%;
+}
+body{
+	display: flex;
+}
+/*左侧*/
+.info-left{
+	width: 260px;
+	border-right: 1px solid #ccc;
+}
+/*右侧*/
+.info-right{
+	flex: 1;
+}
+/*头部*/
+.info-left>header,.info-right>header{
+	height: 60px;
+}
+.info-right .info-content{
+	background-color: #f0f0f0;
+	height: calc(100% - 60px);
+	/*超出部分产生滚动条*/
+	overflow: auto;
+	padding: 10px;
+}
+/*左侧头部*/
+.info-left>header {
+	background-color: #3d556d;
+	line-height: 60px;
+	font-size: 20px;
+	color: #fff;
+}
+.info-left>header img{
+	float: left;
+	width: 40px;
+	height: 40px;
+	margin: 10px;
+	margin-left: 25px;
+}
+/*导航栏*/
+.info-left nav{
+	height: calc(100% - 60px);
+	background-color: #282830;
+}
+.info-left li{
+	line-height: 30px;
+	padding: 10px;
+	border-bottom: 2px solid #333;
+	font-size: 18px;
+	font-weight: 300;
+	color: #fff;
+}
+.info-left li:hover{
+	color: #3d556d;
+	background-color: #ccc;
+	cursor: pointer;
+}
+.info-left li i:first-child{
+	margin-right: 15px;
+}
+.info-left li i:last-child{
+	float: right;
+	line-height: 30px;
+	margin-right: 20px;
+}
+.info-right header{
+	line-height: 60px;
+	overflow: hidden;
+}
+.info-right .icon{
+	display: inline-block;
+}
+.info-right .icon i:first-child{
+	margin-left: 30px;
+	margin-top: 15px;
+}
+.info-right .icon i:nth-child(2){
+	margin-left: 50px;
+}
+.info-right .alt{
+	width: 15px;
+	height: 15px;
+	background-color: red;
+	color: #fff;
+	position: absolute;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 15px;
+	z-index: 999;
+	left: 390px;
+	top: 10px;
+}
+.info-right .user{
+	float: right;
+	margin-right: 30px;
+}
+.info-right .user img{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	float: left;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+.info-right .user span{
+	line-height: 60px;
+	float: left;
+	margin-left: 10px;
+}
+
+.table-div{
+	margin-top: 10px;
+}
+/*表格内的图标颜色*/
+.table-div td i{
+	cursor: pointer;
+	margin-right: 10px;
+}
+.table-div td i:last-child{
+	margin-right: 0px;
+}
+.table-div td i[title = 编辑]{
+	color: #5cb85c;
+}
+.table-div td i[title = 删除]{
+	color: #c9302c;
+}
+.pages-nav{
+	text-align: center;
+}
+.manage{
+	background-color: #fff;
+}
+button{
+	margin: 5px;
+	margin-left: 10px;
+}
+button:last-child{
+	margin-left: 0;
+}
+.alte{
+	color: red;
+}
+.optionDiv select{
+	margin-top: 15px;
+	margin-left: 10px;
+	width: 250px;
+	display: inline-block;
+}
+.optionDiv button{
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.btn-div button{
+	margin-left: 15px;
+	margin-bottom: 5px;
+	width: 100px;
+}
+.userall{
+	margin-top: 10px;
+}
+.userall img{
+	width: 150px;
+	height: 150px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.userinfo{
+	box-shadow: 3px 3px 3px #ccc;
+	line-height: 45px;
+	display: block;
+	padding: 4px;
+	background-color: #fff;
+	margin-bottom: 20px;
+	border: 1px solid #ddd;
+}
+.userinfo .close{
+	position: absolute;
+	right: 40px;
+	top: 20px;
+	display: inline-block;	
+}
+.bootstrap-switch-container,.bootstrap-switch-handle-on{
+	height: 20px;
+	padding: 0;
+	/*margin-bottom: 15px;*/
+}
+.bootstrap-switch-handle-off{
+	position: absolute;
+	bottom: 0;
+}
